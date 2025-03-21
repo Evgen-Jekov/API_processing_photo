@@ -5,16 +5,18 @@ from app.marshmallow.user.user_scheme import UserSchema
 from flask import request
 from werkzeug.security import generate_password_hash
 from marshmallow import ValidationError
+from flasgger import swag_from
 
 class UserRegister(Resource):
+    @swag_from('app/swagger/doc.json')
     def post(self):
         try:
             user_data = UserSchema().load(request.get_json())
         except ValidationError as e:
-            return {'Detail' : e.messages}, 400
+            return {'erorr validate' : e.messages}, 400
 
         if UserModel.query.filter(UserModel.email == user_data['email']).first():
-            return {'Detail' : 'User with this email already exists'}, 400
+            return {'erorr validate' : 'User with this email already exists'}, 400
 
         try:
             psh = generate_password_hash(password=user_data['password'])
@@ -31,8 +33,8 @@ class UserRegister(Resource):
             db.session.commit()
         except Exception as e:
             db.session.rollback()
-            return {"Erorr database" : str(e)}, 500
+            return {"erorr database" : str(e)}, 500
         
         dump_data = UserSchema().dump(user)
 
-        return {'User detail' : dump_data, 'token' : tokens}, 201
+        return {'user_detail' : dump_data, 'token' : tokens}, 201

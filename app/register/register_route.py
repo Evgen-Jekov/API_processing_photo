@@ -1,2 +1,4 @@
+from app.resource.user.register import UserRegister
+
 def register_route(api):
-    pass
+    api.add_resource(UserRegister, '/register')

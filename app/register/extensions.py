@@ -4,6 +4,7 @@ from app.jwt.config_jwt import jwt
 from app.marshmallow.config_marshmallow import ma
 from app.config import Config
 from app.models.config_db import migrate
+from app.swagger.swagger import swagger
 
 def register_ex(app):
     app.config.from_object(Config)
@@ -12,6 +13,7 @@ def register_ex(app):
     db.init_app(app)
     jwt.init_app(app)
     ma.init_app(app)
+    swagger.init_app(app)
     migrate.init_app(app, db)
 
     celery_client.conf.update(app.config)
