@@ -12,10 +12,10 @@ class UserRegister(Resource):
         try:
             user_data = UserSchema().load(request.get_json())
         except ValidationError as e:
-            return {'erorr validate' : e.messages}, 400
+            return {'error validate' : e.messages}, 400
 
         if UserModel.query.filter(UserModel.email == user_data['email']).first():
-            return {'erorr validate' : 'User with this email already exists'}, 400
+            return {'error validate' : 'User with this email already exists'}, 400
 
         try:
             psh = generate_password_hash(password=user_data['password'])
@@ -32,7 +32,7 @@ class UserRegister(Resource):
             db.session.commit()
         except Exception as e:
             db.session.rollback()
-            return {"erorr database" : str(e)}, 500
+            return {"error database" : str(e)}, 500
         
         dump_data = UserSchema().dump(user)
 
