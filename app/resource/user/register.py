@@ -8,7 +8,7 @@ from marshmallow import ValidationError
 from flasgger import swag_from
 
 class UserRegister(Resource):
-    @swag_from('app/swagger/doc.json')
+    @swag_from('doc.yaml')
     def post(self):
         try:
             user_data = UserSchema().load(request.get_json())

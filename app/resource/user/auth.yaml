@@ -1,0 +1,65 @@
+swagger: "2.0"
+info:
+  title: "API for work with picture"
+  description: "API for work with picture"
+  version: "1.0.0"
+host: "127.0.0.1:5000"
+schemes:
+  - "http"
+paths:
+  /register:
+    post:
+      summary: "this path use for register a user"
+      description: "A user can register by this path"
+      parameters:
+        - name: "username"
+          in: "body"
+          type: "string"
+          required: true
+          description: "It is parametr for an username"
+        - name: "email"
+          in: "body"
+          type: "string"
+          required: true
+          description: "It is parametr for an email user"
+        - name: "password"
+          in: "body"
+          type: "string"
+          required: true
+          description: "It is parametr for a password"
+      responses:
+        "201":
+          description: "User registers successfully"
+          schema:
+            type: "object"
+            properties:
+              user_detail:
+                type: "object"
+                properties:
+                  id:
+                    type: "integer"
+                  username:
+                    type: "string"
+                  email:
+                    type: "string"
+              token:
+                type: "object"
+                properties:
+                  token:
+                    type: "string"
+                  refresh_token:
+                    type: "string"
+        "400":
+          description: "Validate error"
+          schema:
+            type: "object"
+            properties:
+              error validate:
+                type: "string"
+        "500":
+          description: "Database error"
+          schema:
+            type: "object"
+            properties:
+              error database:
+                type: "string"
