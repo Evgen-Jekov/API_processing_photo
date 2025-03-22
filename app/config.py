@@ -8,6 +8,8 @@ class Config:
     JWT_SECRET_KEY = os.getenv('JWT')
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=10)
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    CACHE_TYPE = "SimpleCache"
+    CACHE_DEFAULT_TIMEOUT = 300
     SWAGGER = {
     'title': 'API for work with picture',
     'uiversion': 3,
