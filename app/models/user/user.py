@@ -4,7 +4,7 @@ from datetime import timedelta
 
 class UserModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
+    username = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
 
@@ -12,7 +12,7 @@ class UserModel(db.Model):
         time = timedelta(seconds=expire_time)
         ref_time = timedelta(seconds=expire_time*5)
         token = create_access_token(
-                identity=self.id,
+                identity=str(self.id),
                 additional_claims={
                 "username" : self.username,
                 "email" : self.email

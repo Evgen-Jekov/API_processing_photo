@@ -25,8 +25,6 @@ class UserRegister(Resource):
                 password=psh
             )
 
-            tokens = user.create_token()
-
             db.session.add(user)
             db.session.commit()
         except Exception as e:
@@ -34,5 +32,7 @@ class UserRegister(Resource):
             return {"error database" : str(e)}, 500
         
         dump_data = UserSchema().dump(user)
+        print(user.id)
+        tokens = user.create_token()
 
         return {'user_detail' : dump_data, 'token' : tokens}, 201
