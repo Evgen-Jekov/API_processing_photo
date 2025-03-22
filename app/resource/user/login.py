@@ -5,7 +5,6 @@ from app.models.user.user import UserModel
 from app.marshmallow.user.user_scheme import UserSchema
 from marshmallow import ValidationError
 
-
 class UserLogin(Resource):
     def post(self):
         try:

@@ -5,7 +5,6 @@ from app.marshmallow.user.user_scheme import UserSchema
 from flask import request
 from werkzeug.security import generate_password_hash
 from marshmallow import ValidationError
-from flasgger import swag_from
 
 class UserRegister(Resource):
     def post(self):
