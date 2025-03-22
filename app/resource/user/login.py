@@ -9,10 +9,11 @@ class UserLogin(Resource):
     def post(self):
         try:
             data = UserSchema().load(request.get_json())
+            user = UserModel.query.filter(UserModel.email == data['email']).first()
         except ValidationError as e:
             return {'error validate' : e.messages}, 400
-
-        user = UserModel.query.filter(UserModel.email == data['email']).first()
+        except Exception as e:
+            return {"error" : str(e)}, 500
 
         if not user:
             return {'search error' : 'user not found in the database'}, 404
@@ -21,6 +22,6 @@ class UserLogin(Resource):
         
             token = user.create_token()
 
-            return token, 200
+            return {'token' : token}, 200
         else: 
-            return {'error validate' : e.messages}, 401
+            return {'error validate' : "password or email is incorrect"}, 401
